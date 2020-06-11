@@ -31,6 +31,7 @@ public class AT01_CT01 {
 
 	@Test
 	public void test() {
+		
 		System.out.println("Iniciando Teste");
 		inicioPage.selecionarTipoFormulario();
 		try {
