@@ -11,15 +11,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.selenium.core.Driver;
 import com.selenium.pages.InicioPage;
 
-public class CT02 {
+public class CT03 {
+////td[2][text()=43]
 	WebDriver driver;
 	InicioPage inicioPage;
 	// 1. Acessar o sistema (https://blazedemo.com/)
-	// 2. No select “Choose your departure city:” selecionar “San Diego”
-	// 3. No select “Choose your destination city:” selecionar “New York”
+	// 2. Em select “Choose your departure city:” selecionar qualquer valor passado por parâmetro
+	// 3. Em select “Choose your destination city:” selecionar qualquer valor passado por parâmetro
 	// 4. Clicar em “Find Flights”
-	// 5. Escolher a primeira viagem, ou seja clicar no primeiro botão “Choose This
-	// Flight”
+	// 5. Escolher a viagem baseada no “Flight#”, ou seja clicar no botão “Choose This Flight” do “Flight#” passado por parâmetro
 	// 6. Preencher todos os campos do formulário
 	// 7. Enviar (Purchase Flight) o formulário
 	// 8. Validar mensagem de sucesso
@@ -75,5 +75,4 @@ public class CT02 {
 		}
 
 	}
-
 }
