@@ -9,18 +9,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.selenium.core.Driver;
-import com.selenium.pages.InicioPage;
+import com.selenium.pages.CT3Page;
 
 public class CT03 {
-////td[2][text()=43]
+	
 	WebDriver driver;
-	InicioPage inicioPage;
+	CT3Page ct3Page;
 	// 1. Acessar o sistema (https://blazedemo.com/)
-	// 2. Em select “Choose your departure city:” selecionar qualquer valor passado por parâmetro
-	// 3. Em select “Choose your destination city:” selecionar qualquer valor passado por parâmetro
+	// 2. Em select “Choose your departure city:” selecionar qualquer valor passado
+	// por parâmetro
+	// 3. Em select “Choose your destination city:” selecionar qualquer valor
+	// passado por parâmetro
 	// 4. Clicar em “Find Flights”
-	// 5. Escolher a viagem baseada no “Flight#”, ou seja clicar no botão “Choose This Flight” do “Flight#” passado por parâmetro
-	// 6. Preencher todos os campos do formulário
+	// 5. Escolher a viagem baseada no “Flight#”, ou seja clicar no botão “Choose
+	// This Flight” do “Flight#” passado por parâmetro
+	// 6. Preencher todos os campos do formulário (passar as informações por
+	// parâmetro)
 	// 7. Enviar (Purchase Flight) o formulário
 	// 8. Validar mensagem de sucesso
 
@@ -29,39 +33,55 @@ public class CT03 {
 		driver = new Driver().getDriver();
 		// 1. Acessar o sistema (https://blazedemo.com/)
 		Driver.acessarURL(driver, " https://blazedemo.com/");
-		inicioPage = new InicioPage(driver);
+		ct3Page = new CT3Page(driver);
 	}
 
 	@Test
 	public void test() {
 		System.out.println("Iniciando Teste");
-		// 2. No select “Choose your departure city:” selecionar “San Diego”
-		inicioPage.selecionarCidadeSaida();
 
-		// 3. No select “Choose your destination city:” selecionar “New York”
-		inicioPage.selecionarDestino();
+		// 2. Em select “Choose your departure city:” selecionar qualquer valor passado
+		// por parâmetro
+		ct3Page.selecionarCidadeSaida("Portland");
+
+		// 3. Em select “Choose your destination city:” selecionar qualquer valor
+		// passado por parâmetro
+		// ct3Page.selecionarDestino("London");
+		ct3Page.selecionarDestino("London");
 
 		// 4. Clicar em “Find Flights”
-		inicioPage.submeterFormulario();
+		ct3Page.submeterOpcao("Find Flights");
 
-		// 5. Escolher a primeira viagem, ou seja clicar no primeiro botão “Choose This
-		// Flight”
-		inicioPage.selecionarPrimeiraOpcao();
-		
-		// 6. Preencher todos os campos do formulário
-		inicioPage.preencherFormulario();
+		// 5. Escolher a viagem baseada no “Flight#”, ou seja clicar no botão “Choose
+		// This Flight” do “Flight#” passado por parâmetro
+		ct3Page.submeterOpcaoVoo("12");
 
+		// 6. Preencher todos os campos do formulário (passar as informações por
+		// parâmetro)
+		// ct3Page.preencherFormulario();
+		String lista1[] = { "Lorena", "Rua Teste, 148", "Uberlândia", "MG", "75740000", "8675734567", "09", "2020",
+				"LORENA TESTE" };
+		String listaXpath[] = { "inputName", "address", "city", "state", "zipCode", "creditCardNumber",
+				"creditCardMonth", "creditCardYear", "nameOnCard" };
+
+		for (int i = 0; i < lista1.length; i++) {
+			// inicioMap.preencheFormulario.sendKey(driver, lista2[i]);
+			ct3Page.preencherCampo(listaXpath[i], lista1[i]);
+
+		}
+
+		ct3Page.selecionarRember();
 		// 7. Enviar (Purchase Flight) o formulário
-		inicioPage.clicaPurchaseFlight();
+		ct3Page.submeterOpcao("Purchase Flight");
 	}
 
 	@After
 	public void after() {
-
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		// 8. Validar mensagem de sucesso
 
-		try {////h1[text()='Thank you for your purchase today!']
+		// 8. Validar mensagem de sucesso ////h1[text()='Thank you for your purchase
+		// today!']
+		try {
 			wait.until(ExpectedConditions
 					.visibilityOfElementLocated(By.xpath("//h1[text()='Thank you for your purchase today!']")));
 			System.out.println("Formulário enviado com sucesso");

@@ -48,6 +48,7 @@ public class CT01 {
 	public void after() {
 
 		WebDriverWait wait = new WebDriverWait(driver, 10);
+		
 		// 5. Validar se no cabeçalho da tabela tem as informações: "Departs: San Diego"
 		// e "Arrives: New York"
 		try {

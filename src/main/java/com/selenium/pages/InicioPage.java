@@ -13,6 +13,8 @@ public class InicioPage {
 		this.driver = driver;
 	}
 
+	String lista2[] = { "Lorena", "Rua Teste, 148", "Uberlândia", "MG", "75740000", "8675734567", "09", "2020",
+			"LORENA TESTE" };
 	InicioMap inicioMap = new InicioMap(driver);
 
 	public void selecionarCidadeSaida() {
@@ -35,20 +37,15 @@ public class InicioPage {
 		inicioMap.selectPrimeiraOpcao.click(driver);
 	}
 
-	String lista2[] = { "Lorena", "Rua Teste, 148", "Uberlândia", "MG", "75740000", "8675734567", "09", "2020",
-			"LORENA TESTE" };
-
 	public void preencherFormulario() {
 		for (int i = 0; i < lista2.length; i++) {
-			// inicioMap.preencheFormulario.sendKey(driver, lista2[i]);
-			inicioMap.Teste(i).sendKey(driver, lista2[i]);
-
+			inicioMap.preencheForm(i).sendKey(driver, lista2[i]);
 		}
 		inicioMap.selectRemember.click(driver);
-
 	}
 
 	public void clicaPurchaseFlight() {
 		inicioMap.clickPurchaseFlight.click(driver);
 	}
+
 }

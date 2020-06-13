@@ -59,11 +59,12 @@ public class CT02 {
 	public void after() {
 
 		WebDriverWait wait = new WebDriverWait(driver, 10);
+		
 		// 8. Validar mensagem de sucesso
-
 		try {////h1[text()='Thank you for your purchase today!']
+			Thread.sleep(1000);
 			wait.until(ExpectedConditions
-					.visibilityOfElementLocated(By.xpath("//h1[text()='Thank you for your purchase today!']")));
+					.visibilityOfElementLocated(By.xpath("//h1['Thank you for your purchase today!']")));
 			System.out.println("Formulário enviado com sucesso");
 			Thread.sleep(1000);
 			Driver.Close(driver);
