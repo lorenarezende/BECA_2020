@@ -55,4 +55,9 @@ public class Element {
 		Select select = new Select(criarElemento(driver));
 		select.selectByVisibleText(visibleText);
 	}
+	
+	public String getValue() {
+		return this.value;
+				
+	}
 }

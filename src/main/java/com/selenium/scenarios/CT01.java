@@ -3,67 +3,69 @@ package com.selenium.scenarios;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.selenium.core.Driver;
+import com.selenium.pages.FretePage;
 import com.selenium.pages.InicioPage;
+import com.selenium.pages.ItemPage;
 
 public class CT01 {
 	WebDriver driver;
 	InicioPage inicioPage;
-	// 1. Acessar o sistema (https://blazedemo.com/)
-	// 2. No select “Choose your departure city:” selecionar “San Diego”
-	// 3. No select “Choose your destination city:” selecionar “New York”
-	// 4. Clicar em “Find Flights”
-	// 5. Validar se no cabeçalho da tabela tem as informações: "Departs: San Diego"
-	// e "Arrives: New York"
+	ItemPage itemPage;
+	FretePage fretePage;
+	String[] valorFrete = {"R$ 24,38", "R$ 27,04", "R$ 44,79", "R$ 53,82"};
+
+	/**
+	 * 1. Acessar o sistema (https://www.kabum.com.br/) 
+	 * 2. No input “buscar”, pesquisar: Capa Targus Ipad Mini Rotating Versavu THZ668 Grafite 
+	 * 3.Clicar em “Buscar” 
+	 * 4. Clicar no Link do produto pesquisado 
+	 * 5. No campo “Digite seu CEP” preencher com o CEP: 38413-108 
+	 * 6. Clicar em “Calcular Frete” 
+	 * 7. Validar se os 4 valores de frete são: "R$ 23,39", "R$ 40,97","R$ 51,79"
+	 */
 
 	@Before
 	public void before() {
 		driver = new Driver().getDriver();
-		// 1. Acessar o sistema (https://blazedemo.com/)
-		Driver.acessarURL(driver, " https://blazedemo.com/");
+
+		// 1. Acessar o sistema (https://www.kabum.com.br/)
+		Driver.acessarURL(driver, "https://www.kabum.com.br/");
 		inicioPage = new InicioPage(driver);
+		itemPage = new ItemPage(driver);
+		fretePage = new FretePage(driver);
+
 	}
 
 	@Test
 	public void test() {
 
 		System.out.println("Iniciando Teste");
-		// 2. No select “Choose your departure city:” selecionar “San Diego”
-		inicioPage.selecionarCidadeSaida();
-		
-		// 3. No select “Choose your destination city:” selecionar “New York”
-		inicioPage.selecionarDestino();
-		
-		// 4. Clicar em “Find Flights”
-		inicioPage.submeterFormulario();
-		
+		// 2. No input “buscar”, pesquisar: Capa Targus Ipad Mini Rotating Versavu
+		// THZ668 Grafite
+		inicioPage.procurarItem("Mouse Gamer Redragon 10000DPI Chroma Cobra M711");
+
+		// 3. Clicar em “Buscar”
+		inicioPage.clicarBusca();
+
+		// 4. Clicar no Link do produto pesquisado
+		itemPage.clicarLink();
+
+		// 5. No campo “Digite seu CEP” preencher com o CEP: 38413-108
+		fretePage.digitarNCEP("38413-108");
+
+		// 6. Clicar em “Calcular Frete”
+		fretePage.clicarCalcularFrete();// validaFrete();//
+
 	}
 
 	@After
 	public void after() {
 
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		
-		// 5. Validar se no cabeçalho da tabela tem as informações: "Departs: San Diego"
-		// e "Arrives: New York"
-		try {
-			//// h3[text()='Flights from San Diego to New York: ']
-			wait.until(ExpectedConditions
-					.visibilityOfElementLocated(By.xpath("//h3[text()='Flights from San Diego to New York: ']")));
-			System.out.println("Formulário enviado com sucesso");
-			Thread.sleep(1000);
-			Driver.Close(driver);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("FALHA!");
-			Driver.Close(driver);
-		}
+		fretePage.validarFrete(valorFrete);
+		Driver.Close(driver);
 
 	}
 }
